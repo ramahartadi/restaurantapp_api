@@ -31,19 +31,11 @@ class RestaurantListPage extends StatelessWidget {
             ),
           );
         } else if (state.state == ResultState.error) {
-          if (state.message is SocketException) {
-            return Center(
-              child: Material(
-                child: Text("Gagal menyambung ke Internet"),
-              ),
-            );
-          } else {
-            return Center(
-              child: Material(
-                child: Text(state.message),
-              ),
-            );
-          }
+          return Center(
+            child: Material(
+              child: Text(state.message),
+            ),
+          );
         } else {
           return const Center(
             child: Material(

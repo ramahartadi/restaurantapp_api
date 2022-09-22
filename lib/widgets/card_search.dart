@@ -1,7 +1,8 @@
-import 'package:restaurantapp_api/common/styles.dart';
 import 'package:restaurantapp_api/common/navigation.dart';
 import 'package:restaurantapp_api/data/model/search_restaurant.dart';
 import 'package:restaurantapp_api/ui/restaurant_detail_page.dart';
+import 'package:restaurantapp_api/provider/database_provider_search.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
 class CardSearch extends StatelessWidget {
@@ -11,26 +12,46 @@ class CardSearch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: ListTile(
-        contentPadding:
-            const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-        leading: Hero(
-          tag: restaurant.pictureId,
-          child: Image.network(
-            'https://restaurant-api.dicoding.dev/images/medium/${restaurant.pictureId}',
-            width: 100,
-          ),
-        ),
-        title: Text(
-          restaurant.name,
-        ),
-        subtitle: Text(restaurant.city),
-        onTap: () => Navigation.intentWithData(
-          RestaurantDetailPage.routeName,
-          restaurant.id,
-        ),
-      ),
-    );
+    return Consumer<DatabaseProviderSearch>(
+        builder: (context, provider, child) {
+      return FutureBuilder(
+        future: provider.isFavorited(restaurant.id),
+        builder: (context, snapshot) {
+          var isFavorited = snapshot.data ?? false;
+          return Material(
+            child: ListTile(
+              contentPadding:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+              leading: Hero(
+                tag: restaurant.pictureId,
+                child: Image.network(
+                  'https://restaurant-api.dicoding.dev/images/medium/${restaurant.pictureId}',
+                  width: 100,
+                ),
+              ),
+              title: Text(
+                restaurant.name,
+              ),
+              subtitle: Text(restaurant.city),
+              trailing: isFavorited
+                  ? IconButton(
+                      icon: const Icon(Icons.favorite),
+                      color: Theme.of(context).colorScheme.tertiary,
+                      onPressed: () => provider.removeFavorite(restaurant.id),
+                    )
+                  : IconButton(
+                      icon: const Icon(Icons.favorite_border),
+                      color: Theme.of(context).colorScheme.tertiary,
+                      onPressed: () => provider.addFavorite(restaurant),
+                    ),
+              onTap: () => Navigation.intentWithData(
+                RestaurantDetailPage.routeName,
+                restaurant.id,
+              ),
+            ),
+          );
+        },
+      );
+    });
   }
 }

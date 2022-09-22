@@ -3,6 +3,7 @@ import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:restaurantapp_api/common/navigation.dart';
 import 'package:restaurantapp_api/data/api/api_service.dart';
 import 'package:restaurantapp_api/data/db/database_helper.dart';
+import 'package:restaurantapp_api/data/db/database_helper_search.dart';
 import 'package:restaurantapp_api/data/model/restaurant.dart';
 import 'package:restaurantapp_api/data/preferences/preferences_helper.dart';
 import 'package:restaurantapp_api/provider/restaurant_provider.dart';
@@ -11,6 +12,7 @@ import 'package:restaurantapp_api/provider/scheduling_provider.dart';
 import 'package:restaurantapp_api/provider/detail_restaurant_provider.dart';
 import 'package:restaurantapp_api/provider/search_resturant_provider.dart';
 import 'package:restaurantapp_api/provider/database_provider.dart';
+import 'package:restaurantapp_api/provider/database_provider_search.dart';
 import 'package:restaurantapp_api/ui/restaurant_detail_page.dart';
 import 'package:restaurantapp_api/ui/home_page.dart';
 import 'package:restaurantapp_api/utils/background_service.dart';
@@ -63,6 +65,10 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<DatabaseProvider>(
           create: (_) => DatabaseProvider(databaseHelper: DatabaseHelper()),
+        ),
+        ChangeNotifierProvider<DatabaseProviderSearch>(
+          create: (_) =>
+              DatabaseProviderSearch(databaseHelper: DatabaseHelperSearch()),
         ),
       ],
       child: Consumer<PreferencesProvider>(
