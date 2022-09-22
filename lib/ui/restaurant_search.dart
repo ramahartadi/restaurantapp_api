@@ -54,11 +54,19 @@ class SearchRestaurant extends SearchDelegate {
               ),
             );
           } else if (state.state == ResultState.error) {
-            return Center(
-              child: Material(
-                child: Text("Gagal menyambung ke Internet"),
-              ),
-            );
+            if (state.message is SocketException) {
+              return Center(
+                child: Material(
+                  child: Text("Gagal menyambung ke Internet"),
+                ),
+              );
+            } else {
+              return Center(
+                child: Material(
+                  child: Text("Gagal menyambung ke Internet"),
+                ),
+              );
+            }
           } else {
             return const Center(
               child: Material(
