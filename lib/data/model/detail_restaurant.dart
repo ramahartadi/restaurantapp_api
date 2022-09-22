@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:restaurantapp_api/data/model/restaurant.dart';
 
 DetailRestaurant welcomeFromJson(String str) =>
     DetailRestaurant.fromJson(json.decode(str));
@@ -14,13 +15,13 @@ class DetailRestaurant {
 
   final bool error;
   final String message;
-  final Restaurant restaurant;
+  final RestaurantDetail restaurant;
 
   factory DetailRestaurant.fromJson(Map<String, dynamic> json) =>
       DetailRestaurant(
         error: json["error"],
         message: json["message"],
-        restaurant: Restaurant.fromJson(json["restaurant"]),
+        restaurant: RestaurantDetail.fromJson(json["restaurant"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -30,8 +31,8 @@ class DetailRestaurant {
       };
 }
 
-class Restaurant {
-  Restaurant({
+class RestaurantDetail {
+  RestaurantDetail({
     required this.id,
     required this.name,
     required this.description,
@@ -55,7 +56,8 @@ class Restaurant {
   final double rating;
   final List<CustomerReview> customerReviews;
 
-  factory Restaurant.fromJson(Map<String, dynamic> json) => Restaurant(
+  factory RestaurantDetail.fromJson(Map<String, dynamic> json) =>
+      RestaurantDetail(
         id: json["id"],
         name: json["name"],
         description: json["description"],

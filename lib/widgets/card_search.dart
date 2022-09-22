@@ -1,7 +1,7 @@
 import 'package:restaurantapp_api/common/navigation.dart';
-import 'package:restaurantapp_api/data/model/search_restaurant.dart';
+import 'package:restaurantapp_api/data/model/restaurant.dart';
 import 'package:restaurantapp_api/ui/restaurant_detail_page.dart';
-import 'package:restaurantapp_api/provider/database_provider_search.dart';
+import 'package:restaurantapp_api/provider/database_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
@@ -12,8 +12,7 @@ class CardSearch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<DatabaseProviderSearch>(
-        builder: (context, provider, child) {
+    return Consumer<DatabaseProvider>(builder: (context, provider, child) {
       return FutureBuilder(
         future: provider.isFavorited(restaurant.id),
         builder: (context, snapshot) {

@@ -1,4 +1,5 @@
-import 'package:restaurantapp_api/data/model/search_restaurant.dart';
+import 'package:restaurantapp_api/data/model/restaurant.dart';
+import 'package:restaurantapp_api/data/model/restaurant.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DatabaseHelperSearch {
